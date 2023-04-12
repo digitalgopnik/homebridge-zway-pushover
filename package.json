@@ -1,14 +1,14 @@
 {
-  "name": "homebridge-zway",
-  "version": "0.6.0-alpha0",
-  "description": "homebridge-plugin for ZWay Server and RaZBerry",
+  "name": "homebridge-zway-pushover",
+  "version": "0.0.1",
+  "description": "homebridge-plugin for ZWay Server and RaZBerry with pushover possibility",
   "main": "index.js",
   "scripts": {
     "test": "node tests/js/runner.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SphtKr/homebridge-zway.git"
+    "url": "git+https://github.com/digitalgopnik/homebridge-zway-pushover.git"
   },
   "preferGlobal": true,
   "keywords": [
@@ -33,10 +33,10 @@
     "homebridge": ">=0.2.5",
     "istanbul": ">=0.4.5"
   },
-  "author": "S'pht'Kr <fthasphtkr@gmail.com> (https://github.com/SphtKr)",
+  "author": "digitalgopnik <razzbs90@gmail.com> (https://github.com/digitalgopnik)",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/SphtKr/homebridge-zway/issues"
+    "url": "https://github.com/digitalgopnik/homebridge-zway-pushover/issues"
   },
-  "homepage": "https://github.com/SphtKr/homebridge-zway#readme"
+  "homepage": "https://github.com/digitalgopnik/homebridge-zway-pushover#readme"
 }

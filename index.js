@@ -13,6 +13,7 @@ function ZWayServerPlatform(log, config){
     this.login        = config["login"];
     this.password     = config["password"];
     this.opt_in       = config["opt_in"];
+    this.pushover     = config["pushover"] || {};
     this.name_overrides = config["name_overrides"];
     this.batteryLow   = config["battery_low_level"] || 15;
     this.OIUWatts     = config["outlet_in_use_level"] || 2;
@@ -87,6 +88,7 @@ ZWayServerPlatform.getVDevTypeKeyNormalizationMap = {
     "sensorBinary.door": "sensorBinary.Door/Window",
     "sensorBinary.door-window": "sensorBinary.Door/Window",
     "sensorBinary.tamper": "sensorBinary.Tamper",
+    "switchBinary.siren": "switchBinary",
     "sensorMultilevel.temperature": "sensorMultilevel.Temperature",
     "sensorMultilevel.luminosity": "sensorMultilevel.Luminiscence",
     "sensorMultilevel.humidity": "sensorMultilevel.Humidity",
@@ -98,7 +100,7 @@ ZWayServerPlatform.getVDevTypeKeyNormalizationMap = {
     "switchMultilevel.switchColor_cold_white": "switchMultilevel",
     "switchMultilevel.motor": "switchMultilevel.blind",
     "thermostat.thermostat_set_point": "thermostat",
-    "battery": "battery.Battery"
+    "battery": "battery.Battery",
 }
 ZWayServerPlatform.getVDevTypeKeyRoot = function(vdev){
     var key = vdev.deviceType;
@@ -619,7 +621,7 @@ ZWayServerAccessory.prototype = {
 
         // If we know which vdev should be used for this Characteristic, we're done!
         if(this.devDesc.cxmap[cx.UUID] !== undefined){
-           return this.devDesc.devices[this.devDesc.cxmap[cx.UUID]];
+            return this.devDesc.devices[this.devDesc.cxmap[cx.UUID]];
         }
 
         var map = this.uuidToTypeKeyMap;
@@ -1423,7 +1425,7 @@ ZWayServerAccessory.prototype = {
 
         if(cx instanceof Characteristic.ProgrammableSwitchEvent){
           cx.zway_getValueFromVDev = function(vdev){
-              return vdev.metrics.homebridge_level || 0;
+            return vdev.metrics.homebridge_level || 0;
           };
           cx.zway_setValueOnVDev = function(value){
             if(value > cx.props['maxValue']) value = cx.props['minValue'];
