@@ -231,6 +231,10 @@ ZWayServerPlatform.prototype = {
               that.sessionId = body.data.sid;
               opts.headers["Cookie"] = "ZWAYSession=" + that.sessionId;
               debug("Authenticated. Resubmitting original request...");
+              pushover(
+                "Authenticated. Resubmitting original request...",
+                "Debug"
+              );
               request(opts, function (error, response, body) {
                 if (response.statusCode == 200) {
                   deferred.resolve(body);
@@ -328,6 +332,7 @@ ZWayServerPlatform.prototype = {
   },
   accessories: function (callback) {
     debug("Fetching Z-Way devices...");
+    pushover("Fetching Z-Way devices...", "Debug");
     this.zwayRequest({
       method: "GET",
       url: this.url + "ZAutomation/api/v1/devices",
