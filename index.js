@@ -6,7 +6,7 @@ var Characteristic; // = require("../api").homebridge.hap.Characteristic;
 const request = require("request");
 const tough = require("tough-cookie");
 var Q = require("q");
-const pushover = require("pushover-js");
+const Pushover = require("pushover-js");
 
 function ZWayServerPlatform(log, config) {
   this.log = log;
@@ -231,7 +231,7 @@ ZWayServerPlatform.prototype = {
               that.sessionId = body.data.sid;
               opts.headers["Cookie"] = "ZWAYSession=" + that.sessionId;
               debug("Authenticated. Resubmitting original request...");
-              pushover(
+              that.pushover(
                 "Authenticated. Resubmitting original request...",
                 "Debug"
               );
@@ -246,7 +246,7 @@ ZWayServerPlatform.prototype = {
               that.log(
                 "ERROR: Fatal! Authentication failed (error code 401)! Check the username and password in config.json!"
               );
-              pushover(
+              that.pushover(
                 "ERROR: Fatal! Authentication failed (error code 401)! Check the username and password in config.json!"
               );
               deferred.reject(response);
@@ -254,7 +254,7 @@ ZWayServerPlatform.prototype = {
               that.log(
                 `ERROR: Fatal! Authentication failed with unexpected HTTP response code ${response.statusCode}!`
               );
-              pushover(
+              that.pushover(
                 `ERROR: Fatal! Authentication failed with unexpected HTTP response code ${response.statusCode}!`
               );
               deferred.reject(response);
@@ -271,7 +271,7 @@ ZWayServerPlatform.prototype = {
         that.log(
           `ERROR: Request failed! ${resp} ${err}Check the URL in config.json and ensure that the URL can be reached from this system!`
         );
-        pushover(
+        that.pushover(
           `ERROR: Request failed! ${resp} ${err}Check the URL in config.json and ensure that the URL can be reached from this system!`
         );
         if (response) debug(response);
@@ -332,7 +332,7 @@ ZWayServerPlatform.prototype = {
   },
   accessories: function (callback) {
     debug("Fetching Z-Way devices...");
-    pushover("Fetching Z-Way devices...", "Debug");
+    this.pushover("Fetching Z-Way devices...", "Debug");
     this.zwayRequest({
       method: "GET",
       url: this.url + "ZAutomation/api/v1/devices",
@@ -469,7 +469,7 @@ ZWayServerPlatform.prototype = {
 
       if (!accessory) {
         debug("WARN: Didn't find suitable device class!");
-        pushover("WARN: Didn't find suitable device class!");
+        this.pushover("WARN: Didn't find suitable device class!");
       } else foundAccessories.push(accessory);
     }
     return foundAccessories;
@@ -780,7 +780,7 @@ ZWayServerAccessory.prototype = {
             ZWayServerPlatform.ServiceUUIDReverseLookupMap[services[i].UUID]
           }" for vdev "${vdev.id}" with typeKey "${typeKey}"`
         );
-        pushover(
+        this.pushover(
           `WARN: Failed to configure Service "${
             ZWayServerPlatform.ServiceUUIDReverseLookupMap[services[i].UUID]
           }" for vdev "${vdev.id}" with typeKey "${typeKey}"`,
@@ -2471,7 +2471,7 @@ ZWayServerAccessory.prototype = {
         debug(
           `ERROR! Failed to configure required characteristic "${service.characteristics[i].displayName}"!`
         );
-        pushover(
+        this.pushover(
           `ERROR! Failed to configure required characteristic "${service.characteristics[i].displayName}"!`
         );
         return false; // Can't configure this service, don't add it!
