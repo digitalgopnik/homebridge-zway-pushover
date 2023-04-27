@@ -23,15 +23,16 @@
     "homebridge": ">=0.2.5"
   },
   "dependencies": {
-    "request": "2.74.0",
-    "q": "1.4.x",
     "debug": "^2.2.0",
+    "pushover-js": "^1.3.2",
+    "q": "1.4.x",
+    "request": "2.74.0",
     "tough-cookie": "^2.2.0"
   },
   "devDependencies": {
-    "qunit": "^0.9.1",
     "homebridge": ">=0.2.5",
-    "istanbul": ">=0.4.5"
+    "istanbul": ">=0.4.5",
+    "qunit": "^0.9.1"
   },
   "author": "digitalgopnik <razzbs90@gmail.com> (https://github.com/digitalgopnik)",
   "license": "ISC",
