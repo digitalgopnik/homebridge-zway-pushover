@@ -6,7 +6,7 @@ var Characteristic; // = require("../api").homebridge.hap.Characteristic;
 const request = require("request");
 const tough = require("tough-cookie");
 var Q = require("q");
-import { pushover } from "pushover-js";
+const pushover = require("pushover-js");
 
 function ZWayServerPlatform(log, config) {
   this.log = log;
