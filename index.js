@@ -462,8 +462,10 @@ ZWayServerPlatform.prototype = {
           }
         }
 
-      if (!accessory) debug("WARN: Didn't find suitable device class!");
-      else foundAccessories.push(accessory);
+      if (!accessory) {
+        debug("WARN: Didn't find suitable device class!");
+        pushover("WARN: Didn't find suitable device class!");
+      } else foundAccessories.push(accessory);
     }
     return foundAccessories;
   },
@@ -763,23 +765,21 @@ ZWayServerAccessory.prototype = {
       if (this.configureService(services[i], vdev)) {
         validServices.push(services[i]);
         debug(
-          'Found and configured Service "' +
-            ZWayServerPlatform.ServiceUUIDReverseLookupMap[services[i].UUID] +
-            '" for vdev "' +
-            vdev.id +
-            '" with typeKey "' +
-            typeKey +
-            '"'
+          `Found and configured Service "${
+            ZWayServerPlatform.ServiceUUIDReverseLookupMap[services[i].UUID]
+          }" for vdev "${vdev.id}" with typeKey "${typeKey}"`
         );
       } else {
         debug(
-          'WARN: Failed to configure Service "' +
-            ZWayServerPlatform.ServiceUUIDReverseLookupMap[services[i].UUID] +
-            '" for vdev "' +
-            vdev.id +
-            '" with typeKey "' +
-            typeKey +
-            '"'
+          `WARN: Failed to configure Service "${
+            ZWayServerPlatform.ServiceUUIDReverseLookupMap[services[i].UUID]
+          }" for vdev "${vdev.id}" with typeKey "${typeKey}"`
+        );
+        pushover(
+          `WARN: Failed to configure Service "${
+            ZWayServerPlatform.ServiceUUIDReverseLookupMap[services[i].UUID]
+          }" for vdev "${vdev.id}" with typeKey "${typeKey}"`,
+          "Warning"
         );
       }
     }
@@ -2464,14 +2464,10 @@ ZWayServerAccessory.prototype = {
       if (!vdev) {
         success = false;
         debug(
-          'ERROR! Failed to configure required characteristic "' +
-            service.characteristics[i].displayName +
-            '"!'
+          `ERROR! Failed to configure required characteristic "${service.characteristics[i].displayName}"!`
         );
         pushover(
-          'ERROR! Failed to configure required characteristic "' +
-            service.characteristics[i].displayName +
-            '"!'
+          `ERROR! Failed to configure required characteristic "${service.characteristics[i].displayName}"!`
         );
         return false; // Can't configure this service, don't add it!
       }
