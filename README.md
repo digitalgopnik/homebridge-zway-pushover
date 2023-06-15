@@ -1,6 +1,6 @@
 # homebridge-zway
 
-[![npm version](https://badge.fury.io/js/homebridge-zway.svg)](https://badge.fury.io/js/homebridge-zway)
+[![npm version](https://badge.fury.io/js/homebridge-zway-pushover.svg)](https://badge.fury.io/js/homebridge-zway-pushover)
 
 ...is a Homebridge module for [Z-Way Server](http://razberry.z-wave.me/index.php?id=24).
 
