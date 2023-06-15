@@ -287,6 +287,7 @@ ZWayServerPlatform.prototype = {
       this.pushoverClient
     ) {
       this.pushoverClient
+        .setPriority(-1)
         .send(title, message.replace(" ", "+"))
         .then(console.log)
         .catch(console.error);

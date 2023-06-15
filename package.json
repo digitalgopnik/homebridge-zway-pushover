@@ -1,6 +1,6 @@
 {
   "name": "homebridge-zway-pushover",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "homebridge-plugin for ZWay Server and RaZBerry with pushover possibility",
   "main": "index.js",
   "scripts": {
